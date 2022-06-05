@@ -10,6 +10,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import db from "./firebase";
 
 const App = () => {
   const schema = yup.object().shape({
@@ -24,12 +25,19 @@ const App = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+    const res = db.collection("contacts").add(data);
+    if (res) {
+      alert("Data added successfully");
+      reset();
+    } else {
+      alert("Error in adding data");
+    }
   };
 
   return (
