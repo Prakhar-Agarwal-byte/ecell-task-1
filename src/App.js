@@ -49,7 +49,7 @@ const App = () => {
         direction="column"
         sx={{ minHeight: "100vh" }}
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} width="100%" maxWidth={400}>
           <Card sx={{ padding: 5 }} raised>
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
               <Grid
@@ -58,12 +58,11 @@ const App = () => {
                 alignItems="center"
                 justifyContent="center"
                 direction="column"
-                maxWidth="100%"
-                width={400}
               >
                 <Grid item xs={12}>
                   <Typography variant="h4">Contact Us</Typography>
                 </Grid>
+
                 <Grid item xs={12} width="100%">
                   <TextField
                     variant="standard"
@@ -75,6 +74,7 @@ const App = () => {
                     helperText={errors.name && "Please enter your name"}
                   />
                 </Grid>
+
                 <Grid item xs={12} width="100%">
                   <TextField
                     variant="standard"
@@ -86,6 +86,7 @@ const App = () => {
                     helperText={errors.email && "Please enter a valid email"}
                   />
                 </Grid>
+
                 <Grid item xs={12} width="100%">
                   <TextField
                     variant="standard"
@@ -99,6 +100,7 @@ const App = () => {
                     }
                   />
                 </Grid>
+
                 <Grid item xs={12} width="100%">
                   <TextField
                     variant="standard"
@@ -109,6 +111,7 @@ const App = () => {
                     helperText={errors.subject && "Please enter a subject"}
                   />
                 </Grid>
+
                 <Grid item xs={12} width="100%">
                   <TextField
                     variant="standard"
@@ -122,6 +125,7 @@ const App = () => {
                     helperText={errors.message && "Please enter a message"}
                   />
                 </Grid>
+
                 <Grid item xs={12} width="100%">
                   <Button
                     type="submit"
