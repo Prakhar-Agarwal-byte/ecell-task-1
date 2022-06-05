@@ -49,8 +49,8 @@ const App = () => {
         direction="column"
         sx={{ minHeight: "100vh" }}
       >
-        <Grid item xs={12} width="100%" maxWidth={400}>
-          <Card sx={{ padding: 5 }} raised>
+        <Grid item xs={12} width="100%">
+          <Card sx={{ padding: 5, maxWidth: "500px", marginX: "auto" }} raised>
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
               <Grid
                 container
