@@ -11,8 +11,11 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import db from "./firebase";
+import { useSnackbar } from "notistack";
 
 const App = () => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const schema = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email().required(),
@@ -33,10 +36,10 @@ const App = () => {
   const onSubmit = (data) => {
     const res = db.collection("contacts").add(data);
     if (res) {
-      alert("Data added successfully");
+      enqueueSnackbar("Message sent successfully", { variant: "success" });
       reset();
     } else {
-      alert("Error in adding data");
+      enqueueSnackbar("Message not sent", { variant: "error" });
     }
   };
 
@@ -50,7 +53,7 @@ const App = () => {
         sx={{ minHeight: "100vh" }}
       >
         <Grid item xs={12} width="100%">
-          <Card sx={{ padding: 5, maxWidth: "500px", marginX: "auto" }} raised>
+          <Card sx={{ padding: 5 }} raised>
             <form noValidate onSubmit={handleSubmit(onSubmit)}>
               <Grid
                 container
@@ -63,56 +66,60 @@ const App = () => {
                   <Typography variant="h4">Contact Us</Typography>
                 </Grid>
 
-                <Grid item xs={12} width="100%">
-                  <TextField
-                    variant="standard"
-                    type="text"
-                    label="Name"
-                    {...register("name")}
-                    fullWidth
-                    error={errors.name}
-                    helperText={errors.name && "Please enter your name"}
-                  />
+                <Grid item width="100%">
+                  <Grid container spacing={3}>
+                    <Grid item xs={12} md={4}>
+                      <TextField
+                        variant="standard"
+                        type="text"
+                        label="Name"
+                        {...register("name")}
+                        fullWidth
+                        error={errors.name}
+                        helperText={errors.name && "Please enter your name"}
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <TextField
+                        variant="standard"
+                        type="email"
+                        fullWidth
+                        label="Email"
+                        {...register("email")}
+                        error={errors.email}
+                        helperText={
+                          errors.email && "Please enter a valid email"
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                      <TextField
+                        variant="standard"
+                        type="tel"
+                        label="Mobile Number"
+                        fullWidth
+                        {...register("mobile")}
+                        error={errors.mobile}
+                        helperText={
+                          errors.mobile && "Please enter a valid mobile number"
+                        }
+                      />
+                    </Grid>
+
+                    <Grid item width="100%">
+                      <TextField
+                        variant="standard"
+                        label="Subject"
+                        fullWidth
+                        {...register("subject")}
+                        error={errors.subject}
+                        helperText={errors.subject && "Please enter a subject"}
+                      />
+                    </Grid>
+                  </Grid>
                 </Grid>
 
-                <Grid item xs={12} width="100%">
-                  <TextField
-                    variant="standard"
-                    type="email"
-                    fullWidth
-                    label="Email"
-                    {...register("email")}
-                    error={errors.email}
-                    helperText={errors.email && "Please enter a valid email"}
-                  />
-                </Grid>
-
-                <Grid item xs={12} width="100%">
-                  <TextField
-                    variant="standard"
-                    type="tel"
-                    label="Mobile Number"
-                    fullWidth
-                    {...register("mobile")}
-                    error={errors.mobile}
-                    helperText={
-                      errors.mobile && "Please enter a valid mobile number"
-                    }
-                  />
-                </Grid>
-
-                <Grid item xs={12} width="100%">
-                  <TextField
-                    variant="standard"
-                    label="Subject"
-                    fullWidth
-                    {...register("subject")}
-                    error={errors.subject}
-                    helperText={errors.subject && "Please enter a subject"}
-                  />
-                </Grid>
-
-                <Grid item xs={12} width="100%">
+                <Grid item width="100%">
                   <TextField
                     variant="standard"
                     multiline
@@ -126,7 +133,7 @@ const App = () => {
                   />
                 </Grid>
 
-                <Grid item xs={12} width="100%">
+                <Grid item width="100%">
                   <Button
                     type="submit"
                     variant="contained"
