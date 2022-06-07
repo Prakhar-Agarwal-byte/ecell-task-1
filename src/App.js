@@ -16,10 +16,13 @@ import { useSnackbar } from "notistack";
 const App = () => {
   const { enqueueSnackbar } = useSnackbar();
 
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
   const schema = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email().required(),
-    mobile: yup.string().length(10).required(),
+    mobile: yup.string().matches(phoneRegExp).min(10).max(10).required(),
     subject: yup.string().required(),
     message: yup.string().required(),
   });
